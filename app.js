@@ -2,6 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const handlebars = require('express-handlebars');
+const urlencodeParser = bodyParser.urlencoded({extended:false});
+const sql = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '123456',
+    port: 3307
+});
+
+sql.query('use nodejs');
 
 const app = express();
 
@@ -20,6 +29,15 @@ app.get('/' , function (req, res) {
     res.render('index');
     /*console.log(req.params.id); PARAMETROS COM ID*/
 });
+
+app.get('/inserir', function(req, res) {
+    res.render('inserir');
+});
+
+app.post('/controlerForm', urlencodeParser, function(req, res) {
+    sql.query('insert into user values (?,?,?)', [req.body.id,req.body.name, req.body.age]);
+    res.render('controlerForm',{name:req.body.name});
+})
 
 
 //START SERVER
