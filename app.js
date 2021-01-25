@@ -8,6 +8,9 @@ const app = express();
 //TEMPLATE ENGINE
 app.engine('handlebars', handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+app.use('/css', express.static('css'));//PARA OS ARQUIVOS CSS
+app.use('/js', express.static('js'));// PARA OS ARQUIVOS js
+app.use('/img', express.static('img')); //PARA AS IMAGEM ESTÁTICAS
 
 
 //routes and templates
