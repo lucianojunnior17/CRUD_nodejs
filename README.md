@@ -1,2 +1,2 @@
 # CRUD_nodejs
-Web em Foco
+ Curso do Canal Web em Foco
