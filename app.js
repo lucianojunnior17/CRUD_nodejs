@@ -12,6 +12,8 @@ const sql = mysql.createConnection({
 
 sql.query('use nodejs');
 
+
+
 const app = express();
 
 //TEMPLATE ENGINE
@@ -34,14 +36,28 @@ app.get('/inserir', function(req, res) {
     res.render('inserir');
 });
 
+app.get('/select/:id?', function(req, res) {
+    if(!req.params.id) {        
+        sql.query("select * from user order by id asc", function(err, result, fields) {
+            res.render('select',{data:result});
+        });
+    }else{
+        sql.query("select * from user where id=? order by id asc",[req.params.id], function(err, result, fields) {
+            res.render('select',{data:result});
+        });
+    }
+
+    
+});
+
 app.post('/controlerForm', urlencodeParser, function(req, res) {
     sql.query('insert into user values (?,?,?)', [req.body.id,req.body.name, req.body.age]);
     res.render('controlerForm',{name:req.body.name});
-})
+});
 
 
 //START SERVER
 
 app.listen(3000, function (req, res) {
     console.log('Servidor Rodando!!!')
-})
+});
