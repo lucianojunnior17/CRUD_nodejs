@@ -55,6 +55,10 @@ app.post('/controlerForm', urlencodeParser, function(req, res) {
     res.render('controlerForm',{name:req.body.name});
 });
 
+app.get('/deletar/:id', function(req, res) {
+    sql.query('delete from user where id=?',[req.params.id]);
+    res.render('deletar');
+})
 
 //START SERVER
 
